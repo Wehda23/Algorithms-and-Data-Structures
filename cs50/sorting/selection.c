@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "sort.h"
 
 void swap(int *first, int *second)
 {
@@ -41,14 +42,7 @@ int main(void)
         steps++;
     }
     
-    printf("{");
-    for (int i = 0; i < 8; i++)
-    {
-        printf("%d", numbers[i]);
-        if (i != 7)
-            printf(", ");
-    }
-    printf("}");
+    print_array(numbers, 8);
 
     printf("\nSteps: %d", steps);
     return (0);
