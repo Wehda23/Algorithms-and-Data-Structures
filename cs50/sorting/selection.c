@@ -25,7 +25,7 @@ int main(void)
         }
         // Reached the end of the array
         if (index == 7)
-        {
+        {    
             // swap
             swap(&numbers[current], &numbers[smallest_index]);
             // Increment current

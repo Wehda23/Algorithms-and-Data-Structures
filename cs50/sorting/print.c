@@ -11,5 +11,5 @@ void print_array(int *array, int size)
         if (i != size - 1)
             printf(", ");
     }
-    printf("}");
+    printf("}\n");
 }
