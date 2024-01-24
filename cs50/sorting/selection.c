@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include "sort.h"
 
-void swap(int *first, int *second)
-{
-    int temp = *first;
-    *first = *second;
-    *second = temp;
-}
+
 
 int main(void)
 {
