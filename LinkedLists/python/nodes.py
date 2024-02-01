@@ -88,7 +88,7 @@ class Node:
         Class Method used to validate the value will raise error incase of failure
 
         Args:
-            - node ({__class__.__name__} | None): Typeclass {__class__.__name__}
+            - node ({__class__} | None): Typeclass {__class__}
 
         Raises: TypeError incase of error
 
@@ -162,7 +162,7 @@ class DoublyNode(Node):
         """
         super().__init__(value, next)
 
-        self.previous: "DoublyNode" | None = DoublyNode
+        self.previous: "DoublyNode" | None = previous
 
     @property
     def previous(self) -> "DoublyNode" | None:
