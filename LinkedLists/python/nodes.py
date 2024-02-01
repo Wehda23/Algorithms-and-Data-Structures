@@ -1,3 +1,4 @@
+from typing import Union
 """
 This File contains class to create nodes in Python
 
@@ -17,7 +18,7 @@ class Node:
 
     Traverse only Forward
     """
-    def __init__(self, value: int, next: "Node" | None = None):
+    def __init__(self, value: int, next: Union["Node", None] = None):
         """
         Initializes a new instance of the Node class.
 
@@ -55,7 +56,7 @@ class Node:
     
     # Encapsulation
     @property
-    def next(self) -> "Node" | None:
+    def next(self) -> Union["Node", None]:
         """
         Property method used to return next value
 
@@ -65,7 +66,7 @@ class Node:
         return self._next
     
     @next.setter
-    def next(self, new_node: "Node" | None) -> None:
+    def next(self, new_node: Union["Node", None]) -> None:
         """
         Property Setter Method used to set the new node of type <Node>
 
@@ -151,7 +152,7 @@ class DoublyNode(Node):
     Traverse Backwards & Forwards
     """
     
-    def __init__(self, value: int, previous: "DoublyNode" | None, next: "DoublyNode" | None = None):
+    def __init__(self, value: int, previous: Union["DoublyNode" , None] = None, next: Union["DoublyNode" , None] = None):
         """
         Initializes a new instance of the Node class.
 
@@ -165,7 +166,7 @@ class DoublyNode(Node):
         self.previous: "DoublyNode" | None = previous
 
     @property
-    def previous(self) -> "DoublyNode" | None:
+    def previous(self) -> Union["DoublyNode" , None]:
         """
         Property Method used to returns previous DoublyNode/None
         
@@ -175,7 +176,7 @@ class DoublyNode(Node):
         return self._previous
     
     @previous.setter
-    def previous(self, new_previous: "DoublyNode" | None) -> None:
+    def previous(self, new_previous: Union["DoublyNode" , None]) -> None:
         """
         Setter method for setting the previous property
 
