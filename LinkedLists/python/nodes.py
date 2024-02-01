@@ -1,12 +1,10 @@
-from typing import Optional
-
 """
 This File contains class to create nodes in Python
 
 Contains the following classes:
 
 Class Node (Represents Singly Linked Nodes that travers only forward.)
-Class DoublyNode (Represents a Doubly Linked Nodes that can traverse both directions <Backwards, Forwards>.)
+Class DoublyNode (Represents a Doubly Linked Nodes that can traverse both directions <Backwards, Forwards>).
 """
 
 
@@ -25,7 +23,7 @@ class Node:
 
         Args:
             - value (int): Integer value stored in the node.
-            - next  (Optional["Node"]): points to the next object of the same class type (default: None).
+            - next  (<Node> | None): points to the next object of the same class type (default: None).
         """
         # set value
         self.value: int = value
@@ -99,7 +97,7 @@ class Node:
         """
 
         # Check type of next
-        if not (type(node) == self.__class__.__name__):
+        if not (type(node) == self.__class__):
             raise ValueError(f"node: Should be of type {self.__class__.__name__}.")
         
     @property
@@ -125,7 +123,7 @@ class Node:
         """
         # Validate value 
         self.validate_value(new_value)
-        self._value = new_value
+        self._value: int = new_value
 
     def validate_value(self, value: int) -> None:
         """
@@ -194,4 +192,4 @@ class DoublyNode(Node):
         if new_previous is not None:
             self.validate_node(new_previous)
 
-        self._previous: "DoublyNode" = new_previous
+        self._previous: "DoublyNode" | None = new_previous
