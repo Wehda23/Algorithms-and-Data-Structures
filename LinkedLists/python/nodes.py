@@ -99,7 +99,7 @@ class Node:
 
         # Check type of next
         if not (type(node) == self.__class__):
-            raise ValueError(f"node: Should be of type {self.__class__.__name__}.")
+            raise TypeError(f"node: Should be of type {self.__class__.__name__}.")
         
     @property
     def value(self) -> int:
@@ -140,7 +140,7 @@ class Node:
         """
         # Check type of value
         if not isinstance(value, int):
-            raise ValueError("value: Should be of type integer <int>.")
+            raise TypeError("value: Should be of type integer <int>.")
         
 
 class DoublyNode(Node):
