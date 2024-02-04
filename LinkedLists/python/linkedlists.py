@@ -6,72 +6,18 @@ LinkedList Class
 DoublyLinkedList Class
 """
 from abc import ABC, abstractmethod
-from typing import NoReturn, Union, Any
+from typing import Union, Any
 from nodes import Node, DoublyNode
 from sorting import InsertSort
-
-class LinkedListIterator:
-    """
-    Class used as a helper to iterate over a linked list
-    """
-
-    def __init__(self, head: Union[Node, DoublyNode]):
-        """
-        Initializes an iterator object with the given node.
-
-        Args:
-            - head: Pointer to the head of the node
-        """
-
-        self.current: Union[Node, DoublyNode] = head
-
-    def __iter__(self) -> Union[Node, DoublyNode]:
-        """
-        Dunder Method used during iterations
-        """
-        return self
-
-    def __next__(self) -> None:
-        """
-        Method Used during iteration to move to next node
-
-        Returns:
-            - Node type object.
-        """
-
-        # First check if current is not None
-        if self.current is None:
-            raise StopIteration
-
-        node = self.current
-        self.current = self.current.next
-        return node
-
+from linkedlist_iterator import LinkedListIterator
+from linkedlist_node_validators import StrictValidator
 
 class AbstractedLinkedList(ABC):
     """
     Used as an Abstract Class for implmenting LinkedList
     """
-
-    # Which Nodes or type of Nodes are only allowed in the linked list
-    allowed_type: object = None
     # Representation Symbol
     symbol: str
-
-    def validate_node(self, node: object) -> Union[None, NoReturn]:
-        """
-        Validation method used to raise an errror if the type of the node is not a match to the allowed type of Node
-
-        Raises:
-            - TypeError: Incase there is a mismatch between the allowed types of Node in the class and Node inserted.
-
-        Args:
-            - node: New Node to be validated in the LinkedList
-        """
-        if not type(node) == self.allowed_type:
-            raise TypeError(
-                f"""node: Parameter should be of at least one of the following types {str(self.allowed_type)}"""
-            )
 
     def to_set(self) -> set:
         """
@@ -116,6 +62,7 @@ class AbstractedLinkedList(ABC):
             ", ".join(str(getattr(node, "value", None)) for node in self)
         )
         return string
+    
     # Other dunder methods
     def __len__(self) -> int:
         """
@@ -133,7 +80,6 @@ class AbstractedLinkedList(ABC):
         
         return length
 
-    
     def __set__(self) -> set:
         """
         Dunder Method user to return copy of the linked list as in set
@@ -154,7 +100,7 @@ class AbstractedLinkedList(ABC):
         return [node.value for node in self]
 
     
-class LinkedList(AbstractedLinkedList):
+class LinkedList(AbstractedLinkedList, StrictValidator):
     """
     Class that represents a linked list.
 
@@ -163,9 +109,9 @@ class LinkedList(AbstractedLinkedList):
     Head
     Can Traverse Forwards only.
     """
-
     # Set an allowed type of Nodes for this class
     allowed_type: Node = Node
+    
     # Traverse Symbol
     symbol: str = " -> "
 
@@ -187,7 +133,7 @@ class LinkedList(AbstractedLinkedList):
         ] = node  # Initialize empty list or set head to given value
 
     @property
-    def head(self) -> "LinkedList.allowed_type":
+    def head(self) -> object:
         """
         Property Method user to return head of the linked list.
 
@@ -197,7 +143,7 @@ class LinkedList(AbstractedLinkedList):
         return self._head
 
     @head.setter
-    def head(self, new: "LinkedList.allowed_type") -> None:
+    def head(self, new: object) -> None:
         """
         Property Setter Method used to set new head to the linked list.
 
@@ -271,7 +217,16 @@ class LinkedList(AbstractedLinkedList):
 
     # Return Copy Methods
 
-    
+
+    # Interation dunder Method
+    def __iter__(self) -> LinkedListIterator:
+        """
+        Dunder Method Allows iteration over the linked list
+
+        Returns:
+            - LinkedListIterator
+        """
+        return LinkedListIterator(self.head)
 
     # Representation Methods
     def __repr__(self) -> str:
