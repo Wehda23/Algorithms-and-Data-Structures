@@ -26,7 +26,7 @@ class AbstractedLinkedList(ABC):
         Returns:
             - Python Set
         """
-        return set(self)
+        return {getattr(node, "value", None) for node in self}
     
     def to_list(self) -> list:
         """
@@ -35,7 +35,7 @@ class AbstractedLinkedList(ABC):
         Returns:
             - Python list
         """
-        return list(self)
+        return [getattr(node, "value", None) for node in self]
 
     @abstractmethod
     def create_node(value: Any) -> object:
@@ -79,26 +79,6 @@ class AbstractedLinkedList(ABC):
             length += 1
         
         return length
-
-    def __set__(self) -> set:
-        """
-        Dunder Method user to return copy of the linked list as in set
-
-        Returns:
-            - Python Set Data type
-        """
-        return {node.value for node in self}
-    
-    def __list__(self) -> list:
-        """
-        Dunder Method user to return copy of the linked list as in list
-
-        Returns:
-            - Python List Data type
-        """
-        # Return list
-        return [node.value for node in self]
-
     
 class LinkedList(AbstractedLinkedList, StrictValidator):
     """
@@ -213,10 +193,11 @@ class LinkedList(AbstractedLinkedList, StrictValidator):
         # Restate the new head to the node
         self.head: Node = node
 
+    # Find indexOf
+    
     # Drop/pop/Delete method
 
     # Return Copy Methods
-
 
     # Interation dunder Method
     def __iter__(self) -> LinkedListIterator:
@@ -315,3 +296,10 @@ node3: Node = new_list.create_node(22)
 new_list.add(node3)
 
 print(new_list)
+copy_list: list = new_list.to_list()
+copy_set: set = new_list.to_set()
+
+print(type(copy_list)," ", copy_list)
+print(type(copy_set)," ", copy_set)
+print(type(copy_list[0]))
+print(len(new_list))
