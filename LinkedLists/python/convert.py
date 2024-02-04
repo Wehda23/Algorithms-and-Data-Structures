@@ -7,10 +7,10 @@ from abc import ABC, abstractmethod
 
 class ConvertLinkedList(ABC):
     """
-    Interface Class
+    Abstracted Class
     """
     @abstractmethod
-    def convert(self):
+    def to(self):
         pass
 
 class LinkedListToList(ConvertLinkedList):

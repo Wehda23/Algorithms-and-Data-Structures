@@ -6,9 +6,10 @@ LinkedList Class
 DoublyLinkedList Class
 """
 from abc import ABC, abstractmethod
-from typing import NoReturn, Union, Optional, Any
+from typing import NoReturn, Union, Any
 from nodes import Node, DoublyNode
-
+from convert import LinkedListToList, LinkedListToSet, LinkedListToDict
+from sorting import InsertSort
 
 class LinkedListIterator:
     """
@@ -98,8 +99,34 @@ class AbstractedLinkedList(ABC):
             ", ".join(str(getattr(node, "value", None)) for node in self)
         )
         return string
+    # Other dunder methods
+    def __len__(self) -> int:
+        """
+        Dunder Method used to return the length of the linkedlist
 
+        Returns:
+            - Length of the linkedlist
+        """
+        pass
+    
+    def __set__(self) -> set:
+        """
+        Dunder Method user to return copy of the linked list as in set
 
+        Returns:
+            - Python Set Data type
+        """
+        return
+    
+    def __list__(self) -> list:
+        """
+        Dunder Method user to return copy of the linked list as in list
+
+        Returns:
+            - Python List Data type
+        """
+        return
+    
 class LinkedList(AbstractedLinkedList):
     """
     Class that represents a linked list.
@@ -214,8 +241,6 @@ class LinkedList(AbstractedLinkedList):
         self.head: Node = node
 
     # Drop/pop/Delete method
-
-    # Sort Node Method
 
     # Return Copy Methods
 
