@@ -8,7 +8,6 @@ DoublyLinkedList Class
 from abc import ABC, abstractmethod
 from typing import NoReturn, Union, Any
 from nodes import Node, DoublyNode
-from convert import LinkedListToList, LinkedListToSet, LinkedListToDict
 from sorting import InsertSort
 
 class LinkedListIterator:
@@ -74,6 +73,24 @@ class AbstractedLinkedList(ABC):
                 f"""node: Parameter should be of at least one of the following types {str(self.allowed_type)}"""
             )
 
+    def to_set(self) -> set:
+        """
+        Method used to return a set copy of the linked list
+
+        Returns:
+            - Python Set
+        """
+        return set(self)
+    
+    def to_list(self) -> list:
+        """
+        Method used to return a list copy of the linked list
+
+        Returns:
+            - Python list
+        """
+        return list(self)
+
     @abstractmethod
     def create_node(value: Any) -> object:
         """
@@ -107,7 +124,15 @@ class AbstractedLinkedList(ABC):
         Returns:
             - Length of the linkedlist
         """
-        pass
+        # Store Length
+        length: int = 0
+
+        # Loop over the nodes
+        for node in self:
+            length += 1
+        
+        return length
+
     
     def __set__(self) -> set:
         """
@@ -116,7 +141,7 @@ class AbstractedLinkedList(ABC):
         Returns:
             - Python Set Data type
         """
-        return
+        return {node.value for node in self}
     
     def __list__(self) -> list:
         """
@@ -125,7 +150,9 @@ class AbstractedLinkedList(ABC):
         Returns:
             - Python List Data type
         """
-        return
+        # Return list
+        return [node.value for node in self]
+
     
 class LinkedList(AbstractedLinkedList):
     """
@@ -244,12 +271,7 @@ class LinkedList(AbstractedLinkedList):
 
     # Return Copy Methods
 
-    # Dunder/Magic Methods
-    def __iter__(self) -> Node:
-        """
-        Iteration Dunder Method to go to next node
-        """
-        return LinkedListIterator(self.head)
+    
 
     # Representation Methods
     def __repr__(self) -> str:
