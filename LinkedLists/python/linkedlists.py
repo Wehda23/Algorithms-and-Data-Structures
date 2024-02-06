@@ -53,6 +53,16 @@ class AbstractedLinkedList(ABC):
             - Index of the node that contains this value or incase if not found returns None.
         """
         pass
+    
+    @abstractmethod
+    def copy(self) -> "AbstractedLinkedList":
+        """
+        Method used to return a copy of the linked list
+
+        Returns:
+            - Copy of the linkedlist.
+        """
+        pass
 
     @abstractmethod
     def __str__(self) -> str:
@@ -74,6 +84,16 @@ class AbstractedLinkedList(ABC):
         """
         pass
     
+    @abstractmethod
+    def __len__(self) -> str:
+        """
+        Method used to get the length of the linkedlist
+
+        Returns:
+            - Length of the linkedlist
+        """
+        pass
+
 class EasyLinkedList:
     """
     Is a Class to make iterations easier and applicable with Linkedlis.
@@ -99,24 +119,6 @@ class EasyLinkedList:
             - Python list
         """
         return [getattr(node, "value", None) for node in self]
-    
-
-    # Other dunder methods
-    def __len__(self) -> int:
-        """
-        Dunder Method used to return the length of the linkedlist
-
-        Returns:
-            - Length of the linkedlist
-        """
-        # Store Length
-        length: int = 0
-
-        # Loop over the nodes
-        for node in self:
-            length += 1
-        
-        return length
     
     # Interation dunder Method
     def __iter__(self) -> LinkedListIterator:
@@ -281,6 +283,21 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
 
     # Append & Extend Methods
         # Creates new node with the values inserted.
+ 
+    # Drop/pop/Delete method
+
+    # Return Copy Methods
+    def copy(self) -> "LinkedList":
+        """
+        Method that is used to get a copy of the linkedlist.
+
+        Returns:
+            - Copy of the linkedlist.
+        """
+        pass
+    
+    # Below methods are made using the improvements applied by Inherting from EasyLinkedList through multiple inheritance from\ 
+    # LinkedListRepresentation
 
     # Find indexOf
     def index_of(self, value: int) -> Union[int, None, NoReturn]:
@@ -309,9 +326,22 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         # Incase the there is no node containing the value returns None
         return None
     
-    # Drop/pop/Delete method
+    # Other dunder methods
+    def __len__(self) -> int:
+        """
+        Dunder Method used to return the length of the linkedlist
 
-    # Return Copy Methods
+        Returns:
+            - Length of the linkedlist
+        """
+        # Store Length
+        length: int = 0
+
+        # Loop over the nodes
+        for node in self:
+            length += 1
+        
+        return length
          
 class DoublyLinkedList(LinkedList):
     """
