@@ -23,7 +23,6 @@ class AbstractedLinkedList(ABC):
     # Representation Symbol
     symbol: str
     
-    @staticmethod
     @abstractmethod
     def create_node(value: Any) -> object:
         """
@@ -36,7 +35,26 @@ class AbstractedLinkedList(ABC):
             - New Node
         """
         pass
+    
+    @abstractmethod
+    def __str__(self) -> str:
+        """
+        Dunder Method used to return a human-readable string representation
 
+        Returns:
+            - String
+        """
+        pass
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        """
+        Dunder Method used to return representation of the head node of the linked list
+
+        Returns:
+            - String repr of head
+        """
+        pass
     
 class EasyLinkedList:
     """
