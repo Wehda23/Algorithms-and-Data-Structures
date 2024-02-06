@@ -1,7 +1,7 @@
 """
 This File contains Classes:
-LinkedListIterator Class
 AbstractedLinkedList Class
+EasyLinkedList Class
 LinkedList Class
 DoublyLinkedList Class
 """
@@ -18,6 +18,29 @@ class AbstractedLinkedList(ABC):
     """
     # Representation Symbol
     symbol: str
+
+    @abstractmethod
+    def create_node(value: Any) -> object:
+        """
+        Staticmethod used to create and return a New Node of the allowed type of Node
+
+        Args:
+            - value: Can be any allowed type of value to be stored inside the Node
+
+        Returns:
+            - New Node
+        """
+        pass
+
+    
+
+class EasyLinkedList(AbstractedLinkedList):
+    """
+    Is a Class to make iterations easier and applicatable with Linkedlist
+    It inherits from `AbstractedLinkedList` class.
+    This class adds the ability to easily iterate through linked list using for loops
+    Also Adds the ability to return a Set Copy or List copy of the linked list where the elements are (node.value).
+    """
 
     def to_set(self) -> set:
         """
@@ -36,33 +59,8 @@ class AbstractedLinkedList(ABC):
             - Python list
         """
         return [getattr(node, "value", None) for node in self]
-
-    @abstractmethod
-    def create_node(value: Any) -> object:
-        """
-        Staticmethod used to create and return a New Node of the allowed type of Node
-
-        Args:
-            - value: Can be any allowed type of value to be stored inside the Node
-
-        Returns:
-            - New Node
-        """
-        pass
-
-    # String representation
-    def __str__(self) -> str:
-        """
-        Dunder Method used to return a human readable string representation
-
-        Returns:
-            - String
-        """
-        string: str = "[{}]".format(
-            ", ".join(str(getattr(node, "value", None)) for node in self)
-        )
-        return string
     
+
     # Other dunder methods
     def __len__(self) -> int:
         """
@@ -80,7 +78,40 @@ class AbstractedLinkedList(ABC):
         
         return length
     
-class LinkedList(AbstractedLinkedList, StrictValidator):
+    # Interation dunder Method
+    def __iter__(self) -> LinkedListIterator:
+        """
+        Dunder Method Allows iteration over the linked list
+
+        Returns:
+            - LinkedListIterator
+        """
+        return LinkedListIterator(self.head)
+
+    # Representation Methods
+    def __repr__(self) -> str:
+        """
+        Dunder Method used to return represenation of the head node of the linked list
+
+        Returns:
+            - String repr of head
+        """
+        return self.symbol.join(str(node) for node in self)
+    
+    # String representation
+    def __str__(self) -> str:
+        """
+        Dunder Method used to return a human readable string representation
+
+        Returns:
+            - String
+        """
+        string: str = "[{}]".format(
+            ", ".join(str(getattr(node, "value", None)) for node in self)
+        )
+        return string
+    
+class LinkedList(EasyLinkedList, StrictValidator):
     """
     Class that represents a linked list.
 
@@ -198,27 +229,6 @@ class LinkedList(AbstractedLinkedList, StrictValidator):
     # Drop/pop/Delete method
 
     # Return Copy Methods
-
-    # Interation dunder Method
-    def __iter__(self) -> LinkedListIterator:
-        """
-        Dunder Method Allows iteration over the linked list
-
-        Returns:
-            - LinkedListIterator
-        """
-        return LinkedListIterator(self.head)
-
-    # Representation Methods
-    def __repr__(self) -> str:
-        """
-        Dunder Method used to return represenation of the head node of the linked list
-
-        Returns:
-            - String repr of head
-        """
-        return self.symbol.join(str(node) for node in self)
-
 
 class DoublyLinkedList(LinkedList):
     """
