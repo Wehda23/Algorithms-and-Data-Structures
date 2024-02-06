@@ -16,6 +16,9 @@ class AbstractLinkedListNodeValidator(ABC):
 class StrictValidator(AbstractLinkedListNodeValidator):
     """
     This is a class used to strictly validate nodes that are connected in the linked list
+
+    Attributes:
+        - allowed_type (object): Is the type of the Node that is allowed to be inserted into the linked list.
     """
     # Which Nodes or type of Nodes are only allowed in the linked list
     allowed_type: object = None

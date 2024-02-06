@@ -15,6 +15,9 @@ from linkedlist_node_validators import StrictValidator
 class AbstractedLinkedList(ABC):
     """
     Used as an Abstract Class for implmenting LinkedList
+
+    Attributes:
+        - symbol (str): Is the symbol at which will represent the linked list connection.
     """
     # Representation Symbol
     symbol: str
@@ -33,13 +36,14 @@ class AbstractedLinkedList(ABC):
         pass
 
     
-
 class EasyLinkedList(AbstractedLinkedList):
     """
     Is a Class to make iterations easier and applicatable with Linkedlist
     It inherits from `AbstractedLinkedList` class.
+    The purpose of this class is mainly made to make the linked list support <for loops>.
     This class adds the ability to easily iterate through linked list using for loops
     Also Adds the ability to return a Set Copy or List copy of the linked list where the elements are (node.value).
+    Also Adds the ability to apply representation to the linked list using while iterating using for loops
     """
 
     def to_set(self) -> set:
