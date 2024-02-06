@@ -22,7 +22,8 @@ class AbstractedLinkedList(ABC):
     """
     # Representation Symbol
     symbol: str
-
+    
+    @staticmethod
     @abstractmethod
     def create_node(value: Any) -> object:
         """
@@ -37,7 +38,7 @@ class AbstractedLinkedList(ABC):
         pass
 
     
-class EasyLinkedList(ABC):
+class EasyLinkedList:
     """
     Is a Class to make iterations easier and applicable with Linkedlis.
     The purpose of this class is mainly made to make the linked list support <for loops>.
@@ -95,6 +96,7 @@ class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
     """
     Class that utilizes the capability of using for loop with linked list to return suitable representation\
     of the linkedlist
+    It is not Recommended to create an instance from this Class.
     """
     # Representation Methods
     def __repr__(self) -> str:
