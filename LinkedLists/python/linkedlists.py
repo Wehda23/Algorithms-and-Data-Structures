@@ -2,10 +2,11 @@
 This File contains Classes:
 AbstractedLinkedList Class
 EasyLinkedList Class
+LinkedListRepresentation Class
 LinkedList Class
 DoublyLinkedList Class
 """
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, ABCMeta
 from typing import Union, Any
 from nodes import Node, DoublyNode
 from sorting import InsertSort
@@ -36,16 +37,14 @@ class AbstractedLinkedList(ABC):
         pass
 
     
-class EasyLinkedList(AbstractedLinkedList):
+class EasyLinkedList(ABC):
     """
-    Is a Class to make iterations easier and applicatable with Linkedlist
-    It inherits from `AbstractedLinkedList` class.
+    Is a Class to make iterations easier and applicable with Linkedlis.
     The purpose of this class is mainly made to make the linked list support <for loops>.
     This class adds the ability to easily iterate through linked list using for loops
     Also Adds the ability to return a Set Copy or List copy of the linked list where the elements are (node.value).
-    Also Adds the ability to apply representation to the linked list using while iterating using for loops
     """
-
+    
     def to_set(self) -> set:
         """
         Method used to return a set copy of the linked list
@@ -91,7 +90,12 @@ class EasyLinkedList(AbstractedLinkedList):
             - LinkedListIterator
         """
         return LinkedListIterator(self.head)
-
+ 
+class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
+    """
+    Class that utilizes the capability of using for loop with linked list to return suitable representation\
+    of the linkedlist
+    """
     # Representation Methods
     def __repr__(self) -> str:
         """
@@ -115,7 +119,7 @@ class EasyLinkedList(AbstractedLinkedList):
         )
         return string
     
-class LinkedList(EasyLinkedList, StrictValidator):
+class LinkedList(LinkedListRepresentation, StrictValidator):
     """
     Class that represents a linked list.
 
@@ -233,7 +237,7 @@ class LinkedList(EasyLinkedList, StrictValidator):
     # Drop/pop/Delete method
 
     # Return Copy Methods
-
+         
 class DoublyLinkedList(LinkedList):
     """
     Class That represents a doubly linked list
@@ -317,3 +321,8 @@ print(type(copy_list)," ", copy_list)
 print(type(copy_set)," ", copy_set)
 print(type(copy_list[0]))
 print(len(new_list))
+
+try:
+    obj = EasyLinkedList()
+except TypeError as e:
+    print(f"TypeError: {e}")
