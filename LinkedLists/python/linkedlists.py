@@ -1,98 +1,17 @@
 """
 This File contains Classes:
-AbstractedLinkedList Class
 EasyLinkedList Class
 LinkedListRepresentation Class
 LinkedList Class
 DoublyLinkedList Class
 """
-from abc import ABC, abstractmethod, ABCMeta
-from typing import Union, Any, NoReturn
+from abstracts import AbstractedLinkedList, AbstractedDoublyLinkedList
+from typing import Union, NoReturn
 from nodes import Node, DoublyNode
 from sorting import InsertSort
 from linkedlist_iterator import LinkedListIterator
 from linkedlist_node_validators import StrictValidator
 
-class AbstractedLinkedList(ABC):
-    """
-    Used as an Abstract Class for implmenting LinkedList
-    """
-    
-    @abstractmethod
-    def create_node(value: Any) -> object:
-        """
-        Staticmethod used to create and return a New Node of the allowed type of Node
-
-        Args:
-            - value: Can be any allowed type of value to be stored inside the Node
-
-        Returns:
-            - New Node
-        """
-        pass
-    
-    @abstractmethod
-    def head(self) -> Union[object, None]:
-        """
-        Method used to return the head of the linked list
-
-        Returns:
-            - Node of type <Object> if there is a node in the List else returns None.
-        """
-        pass
-
-    @abstractmethod
-    def index_of(self, value: Any) -> Union[int, None]:
-        """
-        Method that is supposed to get the index of the node that contains the input value
-
-        Args:
-            - value (Any): Target Value.
-        
-        Returns:
-            - Index of the node that contains this value or incase if not found returns None.
-        """
-        pass
-    
-    @abstractmethod
-    def copy(self) -> "AbstractedLinkedList":
-        """
-        Method used to return a copy of the linked list
-
-        Returns:
-            - Copy of the linkedlist.
-        """
-        pass
-
-    @abstractmethod
-    def __str__(self) -> str:
-        """
-        Dunder Method used to return a human-readable string representation
-
-        Returns:
-            - String
-        """
-        pass
-
-    @abstractmethod
-    def __repr__(self) -> str:
-        """
-        Dunder Method used to return representation of the head node of the linked list
-
-        Returns:
-            - String repr of head
-        """
-        pass
-    
-    @abstractmethod
-    def __len__(self) -> str:
-        """
-        Method used to get the length of the linkedlist
-
-        Returns:
-            - Length of the linkedlist
-        """
-        pass
 
 class EasyLinkedList:
     """
@@ -128,6 +47,10 @@ class EasyLinkedList:
         Returns:
             - LinkedListIterator
         """
+        # Check if the class has an attribute called head or not
+        if not hasattr(self.__class__, "head"):
+            raise TypeError("Class does not have an attribute called 'head'.")
+        
         return LinkedListIterator(self.head)
  
 class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
@@ -142,6 +65,14 @@ class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
     # Representation Symbol
     symbol: str
 
+    def check_symbol(self) -> Union[None, NoReturn]:
+        """
+        Method to check if the subclass has defined class Attribute Symbol or not
+        """
+        # Check if class contains self or not
+        if not hasattr(self.__class__, 'symbol'):
+            raise NotImplementedError("Class Attribute 'symbol' must be defined.")
+        
     # Representation Methods
     def __repr__(self) -> str:
         """
@@ -150,6 +81,9 @@ class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
         Returns:
             - String repr of head
         """
+        # Check Symbol
+        self.check_symbol()
+        
         return self.symbol.join(str(node) for node in self)
     
     # String representation
@@ -342,8 +276,10 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
             length += 1
         
         return length
-         
-class DoublyLinkedList(LinkedList):
+
+
+
+class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
     """
     Class That represents a doubly linked list
     None <- [previous, value, next] < - > [previous, value, next] < - > [previous, value, next] < - > [previous, value, next] - > None
@@ -426,7 +362,7 @@ print(type(copy_list)," ", copy_list)
 print(type(copy_set)," ", copy_set)
 print(type(copy_list[0]))
 print(len(new_list))
-
+print(repr(new_list))
 try:
     obj = EasyLinkedList()
 except TypeError as e:
