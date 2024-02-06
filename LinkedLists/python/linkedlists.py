@@ -7,7 +7,7 @@ LinkedList Class
 DoublyLinkedList Class
 """
 from abc import ABC, abstractmethod, ABCMeta
-from typing import Union, Any
+from typing import Union, Any, NoReturn
 from nodes import Node, DoublyNode
 from sorting import InsertSort
 from linkedlist_iterator import LinkedListIterator
@@ -16,12 +16,7 @@ from linkedlist_node_validators import StrictValidator
 class AbstractedLinkedList(ABC):
     """
     Used as an Abstract Class for implmenting LinkedList
-
-    Attributes:
-        - symbol (str): Is the symbol at which will represent the linked list connection.
     """
-    # Representation Symbol
-    symbol: str
     
     @abstractmethod
     def create_node(value: Any) -> object:
@@ -36,6 +31,29 @@ class AbstractedLinkedList(ABC):
         """
         pass
     
+    @abstractmethod
+    def head(self) -> Union[object, None]:
+        """
+        Method used to return the head of the linked list
+
+        Returns:
+            - Node of type <Object> if there is a node in the List else returns None.
+        """
+        pass
+
+    @abstractmethod
+    def index_of(self, value: Any) -> Union[int, None]:
+        """
+        Method that is supposed to get the index of the node that contains the input value
+
+        Args:
+            - value (Any): Target Value.
+        
+        Returns:
+            - Index of the node that contains this value or incase if not found returns None.
+        """
+        pass
+
     @abstractmethod
     def __str__(self) -> str:
         """
@@ -115,7 +133,13 @@ class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
     Class that utilizes the capability of using for loop with linked list to return suitable representation\
     of the linkedlist
     It is not Recommended to create an instance from this Class.
+
+    Attributes:
+        - symbol (str): Is the symbol at which will represent the linked list connection.
     """
+    # Representation Symbol
+    symbol: str
+
     # Representation Methods
     def __repr__(self) -> str:
         """
@@ -210,6 +234,9 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         """
         return Node(value)
 
+    # ADD or PUSH Methods
+        # Methods that Adds an Entire node or pushes it into the linked list
+        # The nodes were previously created outside the linkedlist.
     # Add Nodes method
     def add(self, node: Node) -> None:
         """
@@ -252,7 +279,35 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         # Restate the new head to the node
         self.head: Node = node
 
+    # Append & Extend Methods
+        # Creates new node with the values inserted.
+
     # Find indexOf
+    def index_of(self, value: int) -> Union[int, None, NoReturn]:
+        """
+        Method used to find the first index of the node that contains the target value
+
+        Args:
+            - value (int): Integer value to search for in the nodes.
+        
+        Returns:
+            - Index of the node that contains the input value\
+                if the value was not found amongst node values\
+                it will return None.
+        """
+        # Check if the linked list is not empty
+        if not self.head:
+            raise ValueError("Linkedlist is empty!")
+        
+        # Loop over the linked list
+        for index, node in enumerate(self):
+            # Check if the node value matches target value
+            if node.value == value:
+                # Return the index 
+                return index
+            
+        # Incase the there is no node containing the value returns None
+        return None
     
     # Drop/pop/Delete method
 

@@ -143,6 +143,15 @@ class Node:
         if not isinstance(value, int):
             raise TypeError("value: Should be of type integer <int>.")
 
+    # Copy Node
+    def copy(self) -> "Node":
+        """
+        Method To Get a copy of the current Node as in Value only.
+        
+        Returns:
+            - Copy of the Node
+        """
+        return Node(self.value)
 
 class DoublyNode(Node):
     """
@@ -200,3 +209,13 @@ class DoublyNode(Node):
             self.validate_node(new_previous)
 
         self._previous: "DoublyNode" | None = new_previous
+
+    # Copy Node
+    def copy(self) -> "DoublyNode":
+        """
+        Method To Get a copy of the current Node as in Value only.
+        
+        Returns:
+            - Copy of the Node
+        """
+        return DoublyNode(self.value)
