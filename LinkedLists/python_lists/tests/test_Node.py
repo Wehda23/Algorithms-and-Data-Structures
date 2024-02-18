@@ -7,7 +7,7 @@ Class DoublyNode
 """
 
 import unittest
-from nodes import Node, DoublyNode
+from python_lists.nodes.nodes import Node, DoublyNode
 
 
 class TestNode(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestNode(unittest.TestCase):
     def test_set_next_node(self):
         node1: Node = Node(1)
         node2: Node = Node(2)
-        node1.next: Node = node2
+        node1.next = node2
         self.assertEqual(node1.next, node2)
 
     def test_validate_value(self):
@@ -34,7 +34,7 @@ class TestNode(unittest.TestCase):
         node1: Node = Node(1)
         node2: str = "test"
         with self.assertRaises(TypeError):
-            node1.next: Node = node2
+            node1.next = node2
 
 
 class TestDoublyNode(unittest.TestCase):
@@ -68,7 +68,7 @@ class TestDoublyNode(unittest.TestCase):
         node1: DoublyNode = DoublyNode(1)
         node2: str = "test"
         with self.assertRaises(TypeError):
-            node1.next: DoublyNode = node2
+            node1.next = node2
 
 
 if __name__ == "__main__":

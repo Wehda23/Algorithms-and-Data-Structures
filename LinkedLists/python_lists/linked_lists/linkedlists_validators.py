@@ -1,25 +1,18 @@
 """
-File that contains linkedlist node validators
+File that contains validators for linked lists
 """
-from abc import ABC, abstractmethod
-from typing import NoReturn, Union
+from python_lists.validators import AbstractNodeValidator
+from typing import Union, NoReturn
 
-class AbstractLinkedListNodeValidator(ABC):
-    """
-    Abstract Class showing the LinkedList Node Validator
-    """
 
-    @abstractmethod
-    def validate_node(self, node: object) -> Union[None, NoReturn]:
-        pass
-
-class StrictValidator(AbstractLinkedListNodeValidator):
+class StrictValidator(AbstractNodeValidator):
     """
     This is a class used to strictly validate nodes that are connected in the linked list
 
     Attributes:
         - allowed_type (object): Is the type of the Node that is allowed to be inserted into the linked list.
     """
+
     # Which Nodes or type of Nodes are only allowed in the linked list
     allowed_type: object = None
 
@@ -28,7 +21,9 @@ class StrictValidator(AbstractLinkedListNodeValidator):
         Method used to check if class has attribute called allowed_type
         """
         if not hasattr(self.__class__, "allowed_type") or self.allowed_type is None:
-            raise NotImplementedError("The class does not have 'allowed_type' attribute")
+            raise NotImplementedError(
+                "The class does not have 'allowed_type' attribute"
+            )
 
     def validate_node(self, node: object) -> Union[None, NoReturn]:
         """

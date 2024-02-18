@@ -1,7 +1,7 @@
 """
 File that contains Stack Class.
 """
-from ..LinkedLists.python.linkedlists import DoublyLinkedList
+from LinkedLists.python_lists.linked_lists.linkedlists import DoublyLinkedList
 
 
 

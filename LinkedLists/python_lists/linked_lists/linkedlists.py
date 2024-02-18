@@ -5,12 +5,15 @@ LinkedListRepresentation Class
 LinkedList Class
 DoublyLinkedList Class
 """
-from abstracts import AbstractedLinkedList, AbstractedDoublyLinkedList
+from .abstracts import (
+    AbstractedLinkedList,
+    AbstractedDoublyLinkedList,
+)
+from .sorting import InsertSort
+from .linkedlist_iterator import LinkedListIterator
+from .linkedlists_validators import StrictValidator
 from typing import Union, NoReturn
-from nodes import Node, DoublyNode
-from sorting import InsertSort
-from linkedlist_iterator import LinkedListIterator
-from linkedlist_node_validators import StrictValidator
+from python_lists.nodes.nodes import Node, DoublyNode
 
 
 class EasyLinkedList:
@@ -20,7 +23,7 @@ class EasyLinkedList:
     This class adds the ability to easily iterate through linked list using for loops
     Also Adds the ability to return a Set Copy or List copy of the linked list where the elements are (node.value).
     """
-    
+
     def to_set(self) -> set:
         """
         Method used to return a set copy of the linked list
@@ -29,7 +32,7 @@ class EasyLinkedList:
             - Python Set
         """
         return {getattr(node, "value", None) for node in self}
-    
+
     def to_list(self) -> list:
         """
         Method used to return a list copy of the linked list
@@ -38,7 +41,7 @@ class EasyLinkedList:
             - Python list
         """
         return [getattr(node, "value", None) for node in self]
-    
+
     # Interation dunder Method
     def __iter__(self) -> LinkedListIterator:
         """
@@ -50,9 +53,10 @@ class EasyLinkedList:
         # Check if the class has an attribute called head or not
         if not hasattr(self.__class__, "head"):
             raise TypeError("Class does not have an attribute called 'head'.")
-        
+
         return LinkedListIterator(self.head)
- 
+
+
 class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
     """
     Class that utilizes the capability of using for loop with linked list to return suitable representation\
@@ -62,6 +66,7 @@ class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
     Attributes:
         - symbol (str): Is the symbol at which will represent the linked list connection.
     """
+
     # Representation Symbol
     symbol: str
 
@@ -70,9 +75,9 @@ class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
         Method to check if the subclass has defined class Attribute Symbol or not
         """
         # Check if class contains self or not
-        if not hasattr(self.__class__, 'symbol'):
+        if not hasattr(self.__class__, "symbol"):
             raise NotImplementedError("Class Attribute 'symbol' must be defined.")
-        
+
     # Representation Methods
     def __repr__(self) -> str:
         """
@@ -83,9 +88,9 @@ class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
         """
         # Check Symbol
         self.check_symbol()
-        
+
         return self.symbol.join(str(node) for node in self)
-    
+
     # String representation
     def __str__(self) -> str:
         """
@@ -98,7 +103,8 @@ class LinkedListRepresentation(AbstractedLinkedList, EasyLinkedList):
             ", ".join(str(getattr(node, "value", None)) for node in self)
         )
         return string
-    
+
+
 class LinkedList(LinkedListRepresentation, StrictValidator):
     """
     Class that represents a linked list.
@@ -108,9 +114,10 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
     Head
     Can Traverse Forwards only.
     """
+
     # Set an allowed type of Nodes for this class
     allowed_type: Node = Node
-    
+
     # Traverse Symbol
     symbol: str = " -> "
 
@@ -171,8 +178,8 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         return Node(value)
 
     # ADD or PUSH Methods
-        # Methods that Adds an Entire node or pushes it into the linked list
-        # The nodes were previously created outside the linkedlist.
+    # Methods that Adds an Entire node or pushes it into the linked list
+    # The nodes were previously created outside the linkedlist.
     # Add Nodes method
     def add(self, node: Node) -> None:
         """
@@ -195,7 +202,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
             current: Node = current.next
 
         # Explanation there is an implementation inside class node to already validate connecting to new node.
-        current.next: Node = node
+        current.next = node
 
     def push(self, node: Node) -> None:
         """
@@ -216,8 +223,8 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         self.head: Node = node
 
     # Append & Extend Methods
-        # Creates new node with the values inserted.
- 
+    # Creates new node with the values inserted.
+
     # Drop/pop/Delete method
 
     # Return Copy Methods
@@ -229,8 +236,8 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
             - Copy of the linkedlist.
         """
         pass
-    
-    # Below methods are made using the improvements applied by Inherting from EasyLinkedList through multiple inheritance from\ 
+
+    # Below methods are made using the improvements applied by Inherting from EasyLinkedList through multiple inheritance from\
     # LinkedListRepresentation
 
     # Find indexOf
@@ -249,17 +256,17 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         # Check if the linked list is not empty
         if not self.head:
             raise ValueError("Linkedlist is empty!")
-        
+
         # Loop over the linked list
         for index, node in enumerate(self):
             # Check if the node value matches target value
             if node.value == value:
-                # Return the index 
+                # Return the index
                 return index
-            
+
         # Incase the there is no node containing the value returns None
         return None
-    
+
     # Other dunder methods
     def __len__(self) -> int:
         """
@@ -274,9 +281,8 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         # Loop over the nodes
         for node in self:
             length += 1
-        
-        return length
 
+        return length
 
 
 class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
@@ -344,26 +350,3 @@ class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
 
     def push(self, node: DoublyNode) -> None:
         pass
-
-
-node: Node = Node(10)
-node2: Node = Node(15)
-new_list: LinkedList = LinkedList(10)
-new_list.add(node)
-new_list.add(node2)
-node3: Node = new_list.create_node(22)
-new_list.add(node3)
-
-print(new_list)
-copy_list: list = new_list.to_list()
-copy_set: set = new_list.to_set()
-
-print(type(copy_list)," ", copy_list)
-print(type(copy_set)," ", copy_set)
-print(type(copy_list[0]))
-print(len(new_list))
-print(repr(new_list))
-try:
-    obj = EasyLinkedList()
-except TypeError as e:
-    print(f"TypeError: {e}")

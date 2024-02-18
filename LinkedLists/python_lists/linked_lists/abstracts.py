@@ -11,7 +11,7 @@ class AbstractedLinkedList(ABC):
     """
     Used as an Abstract Class for implmenting LinkedList
     """
-    
+
     @abstractmethod
     def create_node(value: Any) -> object:
         """
@@ -24,7 +24,7 @@ class AbstractedLinkedList(ABC):
             - New Node
         """
         pass
-    
+
     @abstractmethod
     def head(self) -> Union[object, None]:
         """
@@ -42,12 +42,12 @@ class AbstractedLinkedList(ABC):
 
         Args:
             - value (Any): Target Value.
-        
+
         Returns:
             - Index of the node that contains this value or incase if not found returns None.
         """
         pass
-    
+
     @abstractmethod
     def copy(self) -> "AbstractedLinkedList":
         """
@@ -77,7 +77,7 @@ class AbstractedLinkedList(ABC):
             - String repr of head
         """
         pass
-    
+
     @abstractmethod
     def __len__(self) -> str:
         """
@@ -89,11 +89,10 @@ class AbstractedLinkedList(ABC):
         pass
 
 
-
 class AbstractedDoublyLinkedList(ABC):
     """
     Abstracted Class to ensure the implementation of requirements to operate as a DoublyLinked List
-    """ 
+    """
 
     @abstractmethod
     def tail(self) -> object:

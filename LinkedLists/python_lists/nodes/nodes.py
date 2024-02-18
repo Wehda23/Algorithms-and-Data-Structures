@@ -1,5 +1,3 @@
-from typing import Union
-
 """
 This File contains class to create nodes in Python
 
@@ -8,9 +6,12 @@ Contains the following classes:
 Class Node (Represents Singly Linked Nodes that travers only forward.)
 Class DoublyNode (Represents a Doubly Linked Nodes that can traverse both directions <Backwards, Forwards>).
 """
+from typing import Union
+from .abstracted_node import AbstractedForwardNode, AbstractedBackwardNode
+from .node_validators import NodeValidator
 
 
-class Node:
+class Node(AbstractedForwardNode, NodeValidator):
     """
     Base Class for creating nodes in python
 
@@ -85,23 +86,6 @@ class Node:
 
         self._next: "Node" | None = new_node
 
-    def validate_node(self, node) -> None:
-        """
-        Class Method used to validate the value will raise error incase of failure
-
-        Args:
-            - node ({__class__} | None): Typeclass {__class__}
-
-        Raises: TypeError incase of error
-
-        Returns:
-            - Nothing
-        """
-
-        # Check type of next
-        if not (type(node) == self.__class__):
-            raise TypeError(f"node: Should be of type {self.__class__.__name__}.")
-
     @property
     def value(self) -> int:
         """
@@ -147,13 +131,14 @@ class Node:
     def copy(self) -> "Node":
         """
         Method To Get a copy of the current Node as in Value only.
-        
+
         Returns:
             - Copy of the Node
         """
         return Node(self.value)
 
-class DoublyNode(Node):
+
+class DoublyNode(Node, AbstractedBackwardNode):
     """
     Class for creating Doubly linked nodes in python
 
@@ -214,7 +199,7 @@ class DoublyNode(Node):
     def copy(self) -> "DoublyNode":
         """
         Method To Get a copy of the current Node as in Value only.
-        
+
         Returns:
             - Copy of the Node
         """

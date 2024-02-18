@@ -2,7 +2,7 @@
 File that contains Queue Class.
 """
 
-from ..LinkedLists.python.linkedlists import LinkedList
+from LinkedLists.python_lists.linked_lists.linkedlists import LinkedList
 
 
 class Queue(LinkedList):

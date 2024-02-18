@@ -2,6 +2,7 @@
 File that contains linkedlistiterators
 """
 
+
 class LinkedListIterator:
     """
     Class used as a helper to iterate over a linked list
