@@ -30,3 +30,7 @@ test_list: list[int] = [1, 3, 5, 6, 7]
 
 new_list.extends(*test_list)
 print(new_list)
+copied_list: LinkedList = new_list.copy()
+print(copied_list)
+reversed_copy: LinkedList = new_list.copy(reversed= True)
+print(reversed_copy)

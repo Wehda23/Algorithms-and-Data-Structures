@@ -194,6 +194,10 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         Returns:
             - Nothing.
         """
+        # incase of empty list
+        if not self.head:
+            self.head = node
+            return
         # Define a current pointer
         current: Node = self.head
         # Iterate through the LinkedList till we reach the last element or NULL
@@ -307,10 +311,12 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
     # LinkedListRepresentation
 
     # Return Copy Methods
-    def copy(self) -> "LinkedList":
+    def copy(self, reversed: bool = False) -> "LinkedList":
         """
         Method that is used to get a copy of the linkedlist.
 
+        Args:
+            - reversed (bool): copy and reverse list (default: False)
         Returns:
             - Copy of the linkedlist.
         """
@@ -319,7 +325,10 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
 
         # Iterate over the linked list
         for node in self:
-            copy.push(node.copy())
+            if reversed:
+                copy.push(node.copy())
+            else:
+                copy.add(node.copy())
 
         # Return the copied Linkedlist
         return copy
@@ -442,6 +451,10 @@ class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
         Returns:
             - Nothing.
         """
+        # incase of empty list
+        if not self.head:
+            self.head = node
+            return
         # Define a current pointer
         current: Node = self.head
         # Iterate through the LinkedList till we reach the last element or NULL
