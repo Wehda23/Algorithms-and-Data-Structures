@@ -18,3 +18,15 @@ print(type(copy_set), " ", copy_set)
 print(type(copy_list[0]))
 print(len(new_list))
 print(repr(new_list))
+
+new_list.pop(3)
+print(new_list)
+new_list.pop(1)
+print(new_list)
+new_list.pop(0)
+print(new_list)
+
+test_list: list[int] = [1, 3, 5, 6, 7]
+
+new_list.extends(*test_list)
+print(new_list)

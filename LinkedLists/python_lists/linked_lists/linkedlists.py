@@ -224,8 +224,87 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
 
     # Append & Extend Methods
     # Creates new node with the values inserted.
+    def append(self, *args, **kwargs) -> None:
+        """
+        Method to append the values to linked lists
+        This method mainly uses self.add method to add new values
+        Args:
+            - args(*int): integer values inserted
 
+        Returns:
+            - Nothing
+        """
+        # Check args
+        if args:
+            for value in args:
+                node: object = self.create_node(value)
+                self.add(node)
+    
+    def extends(self, *args, **kwargs) -> None:
+        """
+        Method to append the values to linked lists
+        This method mainly uses self.push method to push new values
+        Args:
+            - args(*int): integer values inserted
+
+        Returns:
+            - Nothing
+        """
+        # Check args
+        if args:
+            for value in args:
+                node: object = self.create_node(value)
+                self.push(node)
+        
     # Drop/pop/Delete method
+    def pop(self, index: int) -> Node:
+        """
+        Method used to remove an element from the list and returns it
+
+        Args:
+            - index (int): integer identifying at which index this element exists.
+
+        Raises:
+            - IndexError: Incase if the index input was outside index of linked list.
+
+        Returns:
+            - Object or Node Type
+        """
+        # Empty list
+        if len(self) == 0:
+            raise ValueError("Empty List!")
+        
+        # Check the index
+        if index < 0 or index >= len(self):
+            raise IndexError("Index is out of bounce")
+        
+        # incase list has only one element
+        if len(self) == 1:
+            node: Node = self.head
+            self.head = None
+            return node
+        
+        # Pointers
+        position: int = 0
+        # Grab the head of the linked list
+        current: Node = self.head
+        temp: Node = self.head.next
+
+        # Loop over the index
+        while position < index - 1:
+            position += 1
+            current = temp
+            temp = temp.next
+        
+        # Remove link
+        current.next = temp.next
+        temp.next = None
+        # Return the node
+        return temp
+
+
+    # Below methods are made using the improvements applied by Inherting from EasyLinkedList through multiple inheritance from\
+    # LinkedListRepresentation
 
     # Return Copy Methods
     def copy(self) -> "LinkedList":
@@ -235,11 +314,16 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         Returns:
             - Copy of the linkedlist.
         """
-        pass
+        # Create empty linked list
+        copy: "LinkedList" = LinkedList()
 
-    # Below methods are made using the improvements applied by Inherting from EasyLinkedList through multiple inheritance from\
-    # LinkedListRepresentation
+        # Iterate over the linked list
+        for node in self:
+            copy.push(node.copy())
 
+        # Return the copied Linkedlist
+        return copy
+    
     # Find indexOf
     def index_of(self, value: int) -> Union[int, None, NoReturn]:
         """
@@ -346,7 +430,119 @@ class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
 
     # Add method
     def add(self, node: DoublyNode) -> None:
-        pass
+        """
+        Method used to add a node at the end of the linked list.
+
+        Args:
+            - node (DoublyNode): Should be of type class DoublyNode.
+
+        Raises:
+            - TypeError: incase the type of the node is not amongst the allowed types of the class
+
+        Returns:
+            - Nothing.
+        """
+        # Define a current pointer
+        current: Node = self.head
+        # Iterate through the LinkedList till we reach the last element or NULL
+        while current.next:
+            # Traverse forward
+            current: Node = current.next
+
+        # Explanation there is an implementation inside class node to already validate connecting to new node.
+        current.next = node
+        node.previous = current
+        # assign as the tail
+        self.tail = node
 
     def push(self, node: DoublyNode) -> None:
-        pass
+        """
+        Method used to add a node at the start of the linked list and restate the head to this node.
+
+        Args:
+            - node (DoublyNode): Should be of type class DoublyNode.
+
+        Raises:
+            - TypeError: incase the type of the node is not amongst the allowed types of the class
+
+        Returns:
+            - Nothing.
+        """
+        # Set node.next = self.head
+        node.next = self.head
+        # Check first if self.head is a node or none
+        if self.head:
+            self.head.previous = node
+        # Restate the new head to the node
+        self.head: DoublyNode = node
+        # Make sure previous is a None
+        self.head.previous = None
+
+    # Return Copy Methods
+    def copy(self) -> "DoublyLinkedList":
+        """
+        Method that is used to get a copy of the DoublyLinkedList.
+
+        Returns:
+            - Copy of the DoublyLinkedList.
+        """
+        # Create empty linked list
+        copy: "DoublyLinkedList" = DoublyLinkedList()
+
+        # Iterate over the linked list
+        for node in self:
+            copy.push(node.copy())
+
+        # Return the copied DoublyLinkedList
+        return copy
+    
+    # Drop/pop/Delete method
+    def pop(self, index: int) -> DoublyNode:
+        """
+        Method used to remove an element from the list and returns it
+
+        Args:
+            - index (int): integer identifying at which index this element exists.
+
+        Raises:
+            - IndexError: Incase if the index input was outside index of linked list.
+
+        Returns:
+            - Object or DoublyNode Type
+        """
+        # Empty list
+        if len(self) == 0:
+            raise ValueError("Empty List!")
+        
+        # Check the index
+        if index < 0 or index >= len(self):
+            raise IndexError("Index is out of bounce")
+        
+        # incase list has only one element
+        if len(self) == 1:
+            node: DoublyNode = self.head
+            self.head = None
+            self.tail = None
+            return node
+        
+        # Pointers
+        position: int = 0
+        # Grab the head of the linked list
+        current: DoublyNode = self.head
+        temp: DoublyNode = self.head.next
+
+        # Loop over the index
+        while position < index - 1:
+            position += 1
+            current = temp
+            temp = temp.next
+        
+        # Remove link
+        current.next = temp.next
+        # assign current to next node's next previous if exists
+        if temp.next:
+            temp.next.previous = current
+        temp.next = None
+        temp.previous = None
+        # Return the node
+        return temp
