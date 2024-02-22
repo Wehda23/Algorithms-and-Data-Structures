@@ -261,7 +261,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
                 self.push(node)
         
     # Drop/pop/Delete method
-    def pop(self, index: int) -> Node:
+    def pop(self, index: int = 0) -> Node:
         """
         Method used to remove an element from the list and returns it
 
@@ -317,6 +317,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
 
         Args:
             - reversed (bool): copy and reverse list (default: False)
+
         Returns:
             - Copy of the linkedlist.
         """
@@ -377,6 +378,54 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
 
         return length
 
+    # Reverse functionalities
+    def reverse(self, inplace= True) -> object:
+        """
+        Function used to reverse linked list
+
+        Args:
+            - inplace (bool): parameter which indicates to apply changes to current linked list or not
+        
+        Returns:
+            - Copy of the reversed linked list
+        """
+        
+        # Check inplace
+        if not inplace:
+            return self.copy(reversed=True)
+        
+        # first make sure the linked list contains more than one node
+        if len(self) <= 1:
+            return 
+        
+        # Pointers
+        current: Node = self.head
+        next_node: Node = self.head.next
+        previous = None
+
+        # Loop
+        while current:
+            # Save the next node before updating the current.next pointer
+            next_node = current.next
+
+            # Reverse the link
+            current.next = previous
+
+            # Move the pointers forward
+            previous = current
+            current = next_node
+
+        # Update the head of the linked list to the last node
+        self.head = previous
+
+    def __reversed__(self) -> object:
+        """
+        Dunder method used to reverse the existing  linked list.
+        """
+        # Apply reverse function
+        self.reverse(inplace=True)
+        # Return linked list
+        return self
 
 class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
     """
@@ -492,9 +541,12 @@ class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
         self.head.previous = None
 
     # Return Copy Methods
-    def copy(self) -> "DoublyLinkedList":
+    def copy(self, reversed: bool = False) -> "DoublyLinkedList":
         """
         Method that is used to get a copy of the DoublyLinkedList.
+
+        Args:
+            - reversed (bool): copy and reverse list (default: False)
 
         Returns:
             - Copy of the DoublyLinkedList.
@@ -504,7 +556,10 @@ class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
 
         # Iterate over the linked list
         for node in self:
-            copy.push(node.copy())
+            if reversed:
+                copy.push(node.copy())
+            else:
+                copy.add(node.copy())
 
         # Return the copied DoublyLinkedList
         return copy
