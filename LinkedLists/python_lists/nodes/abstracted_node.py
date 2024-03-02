@@ -35,3 +35,51 @@ class AbstractedBackwardNode(ABC):
             - Node or None.
         """
         pass
+
+
+class AbstractedRightNode(ABC):
+    """
+    Abstracted Right Node
+    """
+
+    @abstractmethod
+    def right(self) -> Union["AbstractedRightNode", None]:
+        """
+        Method used to point this node to another of same type or None
+
+        Returns:
+            - Node or None.
+        """
+        pass
+
+
+class AbstractedLeftNode(ABC):
+    """
+    Abstracted Left Node
+    """
+
+    @abstractmethod
+    def left(self) -> Union["AbstractedLeftNode", None]:
+        """
+        Method used to point this node to another of same type or None
+
+        Returns:
+            - Node or None.
+        """
+        pass
+
+
+class AbstractedParentNode(ABC):
+    """
+    Abstracted Parent Node
+    """
+
+    @abstractmethod
+    def parent(self) -> Union["AbstractedParentNode", None]:
+        """
+        Method used to point this node to another of same type or None
+
+        Returns:
+            - Node or None.
+        """
+        pass

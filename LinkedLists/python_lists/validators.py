@@ -5,7 +5,6 @@ from abc import ABC, abstractmethod
 from typing import NoReturn, Union
 
 
-
 class AbstractNodeValidator(ABC):
     """
     Abstract Class showing the LinkedList Node Validator

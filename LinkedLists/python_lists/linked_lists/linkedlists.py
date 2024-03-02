@@ -113,6 +113,10 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
     ^
     Head
     Can Traverse Forwards only.
+
+    Class Attributes:
+        - allowed_type (Node): Type of object Node that is allowed in the linked list
+        - symbol (str): Symbol that represents the link between each node.
     """
 
     # Set an allowed type of Nodes for this class
@@ -157,7 +161,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
             - TypeError: incase the type of the node is not amongst the allowed types of the class
 
         Args:
-            - new (LinkedList.allowed_type | None): to set as the new head of the linked list
+            - new (allowed_type | None): to set as the new head of the linked list
 
         Returns:
             - Nothing
@@ -167,7 +171,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
             self.validate_node(new)
 
         # set head to new value
-        self._head: Union[Node, DoublyNode, None] = new
+        self._head: Union[Node, None] = new
 
     # Create Node Method
     @staticmethod
@@ -243,7 +247,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
             for value in args:
                 node: object = self.create_node(value)
                 self.add(node)
-    
+
     def extends(self, *args, **kwargs) -> None:
         """
         Method to append the values to linked lists
@@ -259,7 +263,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
             for value in args:
                 node: object = self.create_node(value)
                 self.push(node)
-        
+
     # Drop/pop/Delete method
     def pop(self, index: int = 0) -> Node:
         """
@@ -277,17 +281,17 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         # Empty list
         if len(self) == 0:
             raise ValueError("Empty List!")
-        
+
         # Check the index
         if index < 0 or index >= len(self):
             raise IndexError("Index is out of bounce")
-        
+
         # incase list has only one element
         if len(self) == 1:
             node: Node = self.head
             self.head = None
             return node
-        
+
         # Pointers
         position: int = 0
         # Grab the head of the linked list
@@ -299,33 +303,33 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
             position += 1
             current = temp
             temp = temp.next
-        
+
         # Remove link
         current.next = temp.next
         temp.next = None
         # Return the node
         return temp
 
-     # Reverse functionalities
-    def reverse(self, inplace= True) -> object:
+    # Reverse functionalities
+    def reverse(self, inplace=True) -> object:
         """
         Function used to reverse linked list
 
         Args:
             - inplace (bool): parameter which indicates to apply changes to current linked list or not
-        
+
         Returns:
             - Copy of the reversed linked list
         """
-        
+
         # Check inplace
         if not inplace:
             return self.copy(reversed=True)
-        
+
         # first make sure the linked list contains more than one node
         if len(self) <= 1:
-            return 
-        
+            return
+
         # Pointers
         current: Node = self.head
         next_node: Node = self.head.next
@@ -354,7 +358,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         self.reverse(inplace=True)
         # Return linked list
         return self
-    
+
     # Below methods are made using the improvements applied by Inherting from EasyLinkedList through multiple inheritance from\
     # LinkedListRepresentation
 
@@ -381,7 +385,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
 
         # Return the copied Linkedlist
         return copy
-    
+
     # Find indexOf
     def index_of(self, value: int) -> Union[int, None, NoReturn]:
         """
@@ -409,6 +413,34 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         # Incase the there is no node containing the value returns None
         return None
 
+    def __getitem__(self, index):
+        """
+        Dunder method used to get the node at given index.
+
+        Args:
+            - index (int): Index at which this node exists.
+
+        Raises:
+            - IndexError: Incase if passed index does not exists.
+
+        Returns:
+            - The node at the given index incase it exists.
+        """
+        # Check the index
+        if index < 0 or len(self) <= index:
+            raise IndexError("Index: Index Out of bounds")
+        # Grab head
+        current = self.head
+        # Count position
+        count = 0
+        while count < index:
+            # Traverse Forward
+            current = current.next
+            # Increment count
+            count += 1
+        # Return the required Node
+        return current
+
     # Other dunder methods
     def __len__(self) -> int:
         """
@@ -426,7 +458,6 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
 
         return length
 
-   
 
 class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
     """
@@ -435,6 +466,10 @@ class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
             ^                                                                                         ^
             Head                                                                                      Tail
     Can Travers Backwards and Forwards.
+
+    Class Attributes:
+        - allowed_type (Node): Type of object Node that is allowed in the linked list
+        - symbol (str): Symbol that represents the link between each node.
     """
 
     # Set an allowed type of Nodes for this class
@@ -564,7 +599,7 @@ class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
 
         # Return the copied DoublyLinkedList
         return copy
-    
+
     # Drop/pop/Delete method
     def pop(self, index: int) -> DoublyNode:
         """
@@ -582,18 +617,18 @@ class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
         # Empty list
         if len(self) == 0:
             raise ValueError("Empty List!")
-        
+
         # Check the index
         if index < 0 or index >= len(self):
             raise IndexError("Index is out of bounce")
-        
+
         # incase list has only one element
         if len(self) == 1:
             node: DoublyNode = self.head
             self.head = None
             self.tail = None
             return node
-        
+
         # Pointers
         position: int = 0
         # Grab the head of the linked list
@@ -605,7 +640,7 @@ class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
             position += 1
             current = temp
             temp = temp.next
-        
+
         # Remove link
         current.next = temp.next
         # assign current to next node's next previous if exists
