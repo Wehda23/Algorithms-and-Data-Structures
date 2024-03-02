@@ -306,7 +306,55 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
         # Return the node
         return temp
 
+     # Reverse functionalities
+    def reverse(self, inplace= True) -> object:
+        """
+        Function used to reverse linked list
 
+        Args:
+            - inplace (bool): parameter which indicates to apply changes to current linked list or not
+        
+        Returns:
+            - Copy of the reversed linked list
+        """
+        
+        # Check inplace
+        if not inplace:
+            return self.copy(reversed=True)
+        
+        # first make sure the linked list contains more than one node
+        if len(self) <= 1:
+            return 
+        
+        # Pointers
+        current: Node = self.head
+        next_node: Node = self.head.next
+        previous = None
+
+        # Loop
+        while current:
+            # Save the next node before updating the current.next pointer
+            next_node = current.next
+
+            # Reverse the link
+            current.next = previous
+
+            # Move the pointers forward
+            previous = current
+            current = next_node
+
+        # Update the head of the linked list to the last node
+        self.head = previous
+
+    def __reversed__(self) -> object:
+        """
+        Dunder method used to reverse the existing  linked list.
+        """
+        # Apply reverse function
+        self.reverse(inplace=True)
+        # Return linked list
+        return self
+    
     # Below methods are made using the improvements applied by Inherting from EasyLinkedList through multiple inheritance from\
     # LinkedListRepresentation
 
@@ -378,54 +426,7 @@ class LinkedList(LinkedListRepresentation, StrictValidator):
 
         return length
 
-    # Reverse functionalities
-    def reverse(self, inplace= True) -> object:
-        """
-        Function used to reverse linked list
-
-        Args:
-            - inplace (bool): parameter which indicates to apply changes to current linked list or not
-        
-        Returns:
-            - Copy of the reversed linked list
-        """
-        
-        # Check inplace
-        if not inplace:
-            return self.copy(reversed=True)
-        
-        # first make sure the linked list contains more than one node
-        if len(self) <= 1:
-            return 
-        
-        # Pointers
-        current: Node = self.head
-        next_node: Node = self.head.next
-        previous = None
-
-        # Loop
-        while current:
-            # Save the next node before updating the current.next pointer
-            next_node = current.next
-
-            # Reverse the link
-            current.next = previous
-
-            # Move the pointers forward
-            previous = current
-            current = next_node
-
-        # Update the head of the linked list to the last node
-        self.head = previous
-
-    def __reversed__(self) -> object:
-        """
-        Dunder method used to reverse the existing  linked list.
-        """
-        # Apply reverse function
-        self.reverse(inplace=True)
-        # Return linked list
-        return self
+   
 
 class DoublyLinkedList(LinkedList, AbstractedDoublyLinkedList):
     """

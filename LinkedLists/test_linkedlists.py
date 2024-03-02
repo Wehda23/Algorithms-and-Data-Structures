@@ -34,5 +34,5 @@ copied_list: LinkedList = new_list.copy()
 print(copied_list)
 reversed_copy: LinkedList = new_list.copy(reversed= True)
 print(reversed_copy)
-
+print(reversed(reversed_copy))
 print(reversed(reversed_copy))
